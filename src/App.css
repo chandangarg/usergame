@@ -1,0 +1,49 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.container{ max-width: 600px; display: inline-block; margin-top:100px; }
+
+.settings{ width: 100%; display: inline-block; margin-bottom:20px; text-align: left; border-bottom:1px solid #c3c3c3; padding-bottom:20px; }
+.settings .btn{ cursor: pointer; width:auto; transition:0.3s; padding: 10px 25px;border:1px solid blue; margin:0 10px; display: inline-block; background: blue; border-radius: 45px; color:#FFF; }
+.settings .btn:hover{ background: chocolate; border-color: chocolate; color:#fff; cursor: pointer; }
+.settings .btn.active{ background: chocolate; border-color: chocolate; color:#fff; }
+
+.container .game{ width: 100%; display: inline-block; margin:0 auto;  }
+.container .game .row{ width: 100%; float: left; }
+.container .game .row .gameElement{ border:1px solid #000; float: left; padding:5px; border-right:0px; border-bottom:0px; }
+.container .game .row .gameElement:last-child{ border-right: 1px solid #000;  }
+.container .game .row:last-child .gameElement{ border-bottom: 1px solid #000;  }
+.container .game .row .gameElement input{ width: 50px; height: 50px; cursor: pointer; }
+.container .game .row .gameElement input.computer:checked:after{ width: 30px;height: 30px;border-radius: 50%;top: 9px;left: 9px;position: relative;background-color: #ffa500;content: '';display: inline-block;
+  visibility: visible;border:1px solid #ffa500 }
+.container .game .row .gameElement input.user:checked{ color: red; background: red;}
+.game #MoveData{ width: 100%; display: inline-block; }
+.game #MoveData h3{ text-align: left; margin: 10px 0 0 0 !important; }
+.game #MoveData h3 span{ font-weight: 400; }
+
+.container .game .row .gameElement.winner{ background: green;}
+.container .game .hide{ display: none !important;}
+.gameSection{ width: 100%; display: inline-block;}
+#MoveData{ width: 100%; text-align: left; margin: 20px 0;}
+.gameSection.winner:after{ content:''; width:100%; height: 100%; display: inline-block; background: rgba(0,0,0,0.3); position: absolute;
+  top: 0;left: 0; opacity: 0;}
+#MoveData{ border-top:1px solid #c3c3c3; transition: all .3s ease-out; padding-top:20px; margin-top:0px; position: relative; overflow: hidden; height: 70px; }
+
+
+.restartbtn{ cursor: pointer; width:auto; transition:0.3s; padding: 10px 25px;border:1px solid #a94905; margin:10px 0; display: inline-block; background: #a94905; border-radius: 45px; color:#FFF; }  
+.restartbtn:hover{ background: #FFF; color: chocolate; border-color: chocolate; }
+
+#ResultDiv{ width: 100%; position: relative; display: inline-block;}
+#MoveData .result{ width: 100%; top: -100px;  transition: all .3s ease-out;  position: absolute; left:0px; padding:15px; display: inline-block; max-width: 316px; background: chocolate;  }
+#MoveData .show .result{ top:0px; }
+#MoveData .resultData{ width: 50%; display: inline-block; margin:5px 0;  }
+
+#MoveData .result h2{ color:#fff; font-size: 17px; line-height: 30px; margin: 0px; }
+#MoveData .result h3{ font-size: 12px; color:#fff; margin:0px !important; }
+#MoveData .result .restartbtn{ width: 26%; display: inline-block; float: right; margin:4px 0px; }
