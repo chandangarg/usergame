@@ -6,7 +6,7 @@ import { Fireworks } from 'fireworks/lib/react';
 
 const fxProps = {
     count: 1,
-    interval: 1000,
+    interval: 2000,
     bubbleSizeMinimum: 10,
     bubbleSizeMaximum: 50,
     //colors: ['#cc3333', '#4CAF50', '#81C784', 'chocolate', 'blue', 'pink'],
@@ -36,6 +36,10 @@ class GameElements extends React.Component {
     }
 
     componentDidMount(){
+        let Level = localStorage.getItem('Level');
+        if( Level ){
+            this.setState({DifficultLevel: Level});
+        }
         //horizontal winner array
         //vertical winner array
         let winnerArray = [];
@@ -148,7 +152,7 @@ class GameElements extends React.Component {
             let winnerArray = this.state.WinnerVerticalArray;
             
             //check for vertical winning by user
-            winnerArray.forEach( (verticalItems ) => {
+            winnerArray.forEach( (verticalItems ) => { 
                 let verticalMatchCount = 0;
                 var MediumRandom = [];
                 MediumRandom.push( randomNumber );
@@ -162,8 +166,8 @@ class GameElements extends React.Component {
                         }
                     }
                 });
-                //console.log('user verticalMatchCount: '+verticalMatchCount);
-                
+                console.log('user verticalMatchCount: '+verticalMatchCount);
+                console.log( MediumRandom );
                 if( verticalMatchCount >= 3 ){
                     //user is becoming winner
                     //next move by computer should be to restrict user to win
@@ -178,12 +182,15 @@ class GameElements extends React.Component {
         //if difficult then select 3rd and 4th value as the next move by computer
         if( DifficultLevel === 'difficult' ){
             let winnerArray = this.state.WinnerVerticalArray;
+            let horiwinnerArray = this.state.WinnerHorizontalArray;
             
+            var compNextMove = Array();
+            compNextMove.push( randomNumber );
             //check for vertical winning by user
             winnerArray.forEach( (verticalItems ) => {
                 let verticalMatchCount = 0;
                 var MediumRandom = [];
-                MediumRandom.push( randomNumber );
+                //MediumRandom.push( randomNumber );
                 //console.log( '=======user=============='+userLoopCount+'================' );
                 verticalItems.forEach( VerticalMap => {
                     if( userSelectedData.indexOf(VerticalMap) !== -1 ){
@@ -199,10 +206,63 @@ class GameElements extends React.Component {
                 if( verticalMatchCount >= 2 ){
                     //user is becoming winner
                     //next move by computer should be to restrict user to win
-                    randomNumber = MediumRandom[Math.floor(Math.random() * MediumRandom.length)];
+                    
+                    MediumRandom.forEach( randVal => {
+                        compNextMove.push(randVal);
+                    })
+                    console.log(compNextMove);
+                    //randomNumber = MediumRandom[Math.floor(Math.random() * MediumRandom.length)];
                 }
             }); 
 
+            horiwinnerArray.forEach( (horiItems) => {
+                var eachRow = horiItems;
+                let horiMatchCount = 0;
+                var MediumRandom = [];
+                //MediumRandom.push( randomNumber );
+                //console.log(MediumRandom);
+                eachRow.forEach( (rowData) =>{
+                    if( userSelectedData.indexOf(rowData) !== -1 ){
+                        horiMatchCount++;
+                    }else{
+                        if( availableSlots.indexOf(rowData) !== -1 ){
+                            MediumRandom.push( rowData );
+                        }
+                    }
+                });
+                if( horiMatchCount >= 2 ){
+                    //user is becoming winner
+                    //next move by computer should be to restrict user to win
+                    //console.log(MediumRandom);
+                    MediumRandom.forEach( (randomItem) => {
+                        console.log(randomItem);
+                        if( userSelectedData.indexOf(randomItem) === -1 ){
+                            compNextMove.push(randomItem);
+                        }
+                    });
+                    //console.log(compNextMove);
+                    let unique = [];
+                    compNextMove.forEach( (val) => {
+                        if( unique.indexOf(val) === -1  ){
+                            unique.push(val);
+                        }
+                    });
+                    console.log(unique);
+                    //return false;        
+                    //randomNumber = compNextMove[Math.floor(Math.random() * compNextMove.length)];
+                }
+            });
+            var finalRandomNumber = [];
+            compNextMove.forEach( (nextMove) => {
+                if( availableSlots.indexOf(nextMove) !== -1 ){
+                    finalRandomNumber.push( nextMove );
+                }
+            });
+            console.log( finalRandomNumber );
+            randomNumber = compNextMove[Math.floor(Math.random() * compNextMove.length)];
+
+            console.log(compNextMove);
+            
             CompSelectedData.push( randomNumber );
         }
 
@@ -220,13 +280,11 @@ class GameElements extends React.Component {
         //console.log(elem );
         elem.className += ' computer';
         elem.checked += ' true';
-        console.log(this.state);
-
+        
         var moveelem = document.getElementById("MoveData");
         //console.log(elem );
         moveelem.className = '';
-        console.log(this.state);
-
+        
         // code to check and declare winner of the game
         if( totalClick >= 4 && checkWinner === '' ){
             this.checkWinner();
@@ -258,13 +316,13 @@ class GameElements extends React.Component {
                 loopcount++;
                 //check for user
                 if( userData.indexOf(loopcount) !== -1 ){
-                    console.log('found : '+(loopcount), i, j, usercount );
+                    //console.log('found : '+(loopcount), i, j, usercount );
                     userwinnerIds.push( loopcount );
                     usercount++;
                 }
                 //check for computer
                 if( compData.indexOf(loopcount) !== -1 ){
-                    console.log('found : '+(loopcount), i, j, compcount );
+                    //console.log('found : '+(loopcount), i, j, compcount );
                     compwinnerIds.push( loopcount );
                     compcount++;
                 }
@@ -364,6 +422,7 @@ class GameElements extends React.Component {
     }
 
     setDifficultyLevel = (event) =>{
+        localStorage.setItem('Level', event.target.id);
         this.setState({ DifficultLevel: event.target.id });
     }
 
@@ -418,7 +477,7 @@ class GameElements extends React.Component {
                         </div>
                     </div>
                     <div id="ResultDiv" className={this.state.ShowWinnerDiv}>
-                        <Fireworks {...fxProps} />
+                        { /*<Fireworks {...fxProps} /> */ }
                     </div>
                 </div>    
                 <div id="MoveData" className="hide">
