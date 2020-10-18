@@ -184,7 +184,7 @@ class GameElements extends React.Component {
             let winnerArray = this.state.WinnerVerticalArray;
             let horiwinnerArray = this.state.WinnerHorizontalArray;
             
-            var compNextMove = Array();
+            var compNextMove = [];
             compNextMove.push( randomNumber );
             //check for vertical winning by user
             winnerArray.forEach( (verticalItems ) => {
@@ -404,7 +404,6 @@ class GameElements extends React.Component {
                 }
             });
             //console.log('comp verticalMatchCount: '+verticalMatchCount);
-            
             //const compfound = verticalItems.some(r=> compwinnerIds.includes(r));
             if( verticalMatchCount === 4 ){
                 //user is winner as vertical data matches
@@ -477,7 +476,7 @@ class GameElements extends React.Component {
                         </div>
                     </div>
                     <div id="ResultDiv" className={this.state.ShowWinnerDiv}>
-                        { /*<Fireworks {...fxProps} /> */ }
+                        <Fireworks {...fxProps} />
                     </div>
                 </div>    
                 <div id="MoveData" className="hide">
