@@ -57,6 +57,7 @@
   #MoveData .result{ max-width: 92%; }
   .game #MoveData{ padding: 0 15px; height: 90px; width:90%; }
   .settings{ text-align: center; }
+  .settings .btn{ padding: 8px 20px; }
 }
 
 @media only screen and (max-width: 375px){
@@ -66,4 +67,5 @@
   #MoveData .result{ max-width: 85%; }
   .game #MoveData{ padding: 0 15px; height: 90px; width:90%; }
   .settings{ text-align: center; }
+  .settings .btn{ padding: 8px 20px; }
 }
